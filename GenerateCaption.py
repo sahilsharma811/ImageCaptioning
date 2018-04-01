@@ -1,7 +1,7 @@
 import cloudsight
 import GenerateVoice as GV
 
-def analyse(image_name, API_KEY):
+def caption(image_name, API_KEY):
 	auth=cloudsight.SimpleAuth(API_KEY)
 	api = cloudsight.API(auth)	
 	
@@ -12,11 +12,14 @@ def analyse(image_name, API_KEY):
 	status = api.wait(response['token'], timeout=30)	
 	status = api.image_response(response['token'])	
 	if status['status'] != cloudsight.STATUS_NOT_COMPLETED:
-		caption = response['name']
-		print(caption)
-		GV.speak(caption)
+		try:
+			caption = response['name']
+			print(caption)
+			GV.speak(caption)
+		except:
+			print('Cannot Process this Image')
 	else:
 		print('Cannot Process Image')
 
 if __name__ == '__main__':
-	analyse('try.jpg', 'LKUYuDVfT_MEJN7-gF266g')
+	caption('try.jpg', 'Cloud Sight API KEY')
