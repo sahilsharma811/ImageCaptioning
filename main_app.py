@@ -3,9 +3,10 @@ from tkinter import filedialog
 import cv2
 import os
 from capture import Capture_Image
-from GenerateCaption import caption
+from GenerateCaption import Caption
 import PIL
 from PIL import Image
+import time
 
 window=Tk()
 
@@ -38,22 +39,21 @@ menu.add_cascade(label="Help", menu=helpmenu)
 
 #to tae real time image
 def Capture_Img():
-	img = Capture_Image()
-	#im = Image.open(img)
-	#im.show()
-	caption(img, 'Cloud Sight API Key')
+    img = Capture_Image()
+    #im = Image.open(img)
+    #im.show()
+    image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), img)
+    Caption(image_path, 'Cloud Sight API KEY')
 
 
 #to use the stored images
 def Stored_Img():
 
-	def Openfile():
-		image_name = filedialog.askopenfilename(initialdir = "/ImageCaption/Images/",title = "Select file",filetypes = (("jpg files","*.jpg"),("all files","*.*")))
-		return (image_name)
-
-	image_path=Openfile()	
-	caption(image_path, 'Cloud Sight API Key')
-
+    def Openfile():
+        image_name = filedialog.askopenfilename(initialdir = "/ImageCaption/Images/",title = "Select file",filetypes = (("jpg files","*.jpg"),("all files","*.*")))
+        return (image_name)
+    image_path=Openfile()
+    Caption(image_path, 'Cloud Sight API KEY')
 
 # introducing window structure
 canvas_width = 650
