@@ -43,7 +43,7 @@ def Capture_Img():
     #im = Image.open(img)
     #im.show()
     image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), img)
-    Caption(image_path, 'Cloud Sight API KEY')
+    Caption(image_path, 'API KEY')
 
 
 #to use the stored images
@@ -52,8 +52,8 @@ def Stored_Img():
     def Openfile():
         image_name = filedialog.askopenfilename(initialdir = "/ImageCaption/Images/",title = "Select file",filetypes = (("jpg files","*.jpg"),("all files","*.*")))
         return (image_name)
-    image_path=Openfile()
-    Caption(image_path, 'Cloud Sight API KEY')
+    image_path=Openfile()	
+    Caption(image_path, 'API KEY')
 
 # introducing window structure
 canvas_width = 650
