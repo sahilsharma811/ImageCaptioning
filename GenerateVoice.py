@@ -1,5 +1,7 @@
 import os
 from subprocess import call
+from subprocess import call
+import os
 
 def speak(message):
 	os.system('espeak "{}"'.format(message))
