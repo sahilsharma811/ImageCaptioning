@@ -1,6 +1,7 @@
 import cloudsight as CS
 import GenerateVoice as GV
 import time
+import detector as DT
 def Caption(image_name, passs):
 	auth = CS.SimpleAuth(passs)
 	conn = CS.API(auth)	
@@ -19,20 +20,26 @@ def Caption(image_name, passs):
 			for content in Filter_chocolate:
 				if content in caption:
 					message = "Warning: Eating %s is injurious to Health...Image Content" %content 
-					GV.speak('Warning: Eating Cholocate is injurious to Health.... Image Content\n')
+					#GV.speak('Warning: Eating Cholocate is injurious to Health.... Image Content\n')
 					message = message+caption
 					caption=message
 					break
 			for content in filter_cigarette:
 				if content in caption:
 					message = "Warning: Smoking %s is injurious to Health...Image Content. " %content 
-					GV.speak('Warning: Smoking %s is injurious to Health.... Image Content. \n' %content)
+					#GV.speak('Warning: Smoking %s is injurious to Health.... Image Content. \n' %content)
 					message = message+caption
 					caption=message
 					break		
 			for content in filter_phone:
 				if content in caption:
 					caption = "Alert: %s Detected.. Filtered Content.." %content
+
+			person = DT.Recognise_Face(image_name)
+			if person != 0:
+				message = 'You are looking at %s. ' %person
+				message = message + caption
+				caption = message
 			GV.speak(caption)
 			return(caption)
 		except:
@@ -41,4 +48,4 @@ def Caption(image_name, passs):
 		print('Cannot Process Image')
 
 if __name__ == '__main__':
-	Caption('try.jpg', '')
+	Caption('try.jpg', 'i28Cc3aCHFljddrQDj8FMg')
