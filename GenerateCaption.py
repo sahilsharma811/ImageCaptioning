@@ -48,4 +48,4 @@ def Caption(image_name, passs):
 		print('Cannot Process Image')
 
 if __name__ == '__main__':
-	Caption('try.jpg', 'i28Cc3aCHFljddrQDj8FMg')
+	Caption('try.jpg', '')

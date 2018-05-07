@@ -14,9 +14,9 @@ def Recognise_Face(ImageName):
         cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
         id,conf=rec.predict(gray[y:y+h,x:x+w])
         if id==1:
-            id="Sahil"    
+            id="Sahil"   
         else:
-            id="Unknown"   
+            id=0   
         cv2.putText(img,str(id),(x,y+h),fontface,2,(255,0,0),3);
     return id
 

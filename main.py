@@ -17,6 +17,11 @@ window=Tk()
 
 window.title("Drishti - Artificial Vision")
 
+def Speak_About():
+	GV.speak("""Drishti is a Software that provides information to the blind about the surrounding
+    1. Real Time Image Annotation
+    2. Stored Image Annotation
+    """ )
 
 #introducing window
 def About():
@@ -27,15 +32,19 @@ def About():
     1. Real Time Image Annotation
     2. Stored Image Annotation
     """ )
-    GV.speak("""Drishti is a Software that provides information to the blind about the surrounding
-    1. Real Time Image Annotation
-    2. Stored Image Annotation
-    """ )
-    sleep(0.05)
+        
     message.pack( side = TOP)
     about.geometry('500x100')
-
+    process1 = Process(target=Speak_About, args=())
+    process1.start()
     about.mainloop()
+
+def Speak_How():
+	GV.speak("""Welcome to Drishti - Artificial Vision
+		Here you are provided with 2 bottons. First button is for capturing the real time 
+		image 
+		and second button is for using some stored image
+		You can also use the available Drishti Chat Bot for the same purpose""" )
 
 def How_To():
 	how = Tk()
@@ -44,16 +53,14 @@ def How_To():
 		Here you are provided with 2 bottons. First button is for capturing the real time image 
 		and second button is for using some stored image
 		You can also use the available Drishti Chat Bot for the same purpose """)
-	GV.speak("""Welcome to Drishti - Artificial Vision
-		Here you are provided with 2 bottons. First button is for capturing the real time 
-		image 
-		and second button is for using some stored image
-		You can also use the available Drishti Chat Bot for the same purpose""" )
+	
 	
 	message.pack( side = TOP)
 	b1=Button(how, text="OK", command= how.destroy)
 	b1.pack(padx=20, pady=5)
 	how.geometry('560x110')
+	process1 = Process(target=Speak_About, args=())
+	process1.start()
 	how.mainloop()
 
 menu = Menu(window)
@@ -77,22 +84,25 @@ def Caption_Window(image_path, sentence):
 	canvas_height =400
 	canvas = Canvas(caption,width=canvas_width,height=canvas_height)
 	canvas.pack()
-	Filter_Phone=['smartphone', 'phone', 'mobile', 'Smartphone', 'Phone' ,'Mobile']
+	Filter_Phone=['smartphone', 'phone', 'mobile', 'Smartphone', 'Phone' ,'Mobile', 'blood']
 	caps = str(sentence)
 	for content in Filter_Phone:
 		if content in caps:
 			sleep(0.05)
 			GV.speak("Can not display image")
-			image_name = 'blocked.jpg'
+			image_name = 'block.jpg'
 			print("Can not display image")
 			break		
 		else:
 			image_name = image_path
 
+	#resizing of the image
 	r_image = cv2.imread(image_name)
 	r_image = cv2.resize(r_image,(400,400))
-
-	font = cv2.FONT_HERSHEY_SIMPLEX
+	cv2.imwrite(image_name,r_image)
+	#to write the caption over the image
+	 
+	#To display the Image along with the Caption
 	img = ImageTk.PhotoImage(Image.open(image_name))
 	canvas.create_image(0,0, anchor=NW, image=img)
 
@@ -109,26 +119,28 @@ def Caption_Window(image_path, sentence):
 	def Email(image_path,sentence):
 		#calls the email() function of sendemail file by creating obj
 		mail_obj = email()
-		mail_obj.configure('Sender Email','Password')
-		sender = 'Sender\'s Email'
-		password = 'Sender\'s Password'
+		mail_obj.configure('Sender Email ID','Email Password')
+		sender = 'Sender Email ID'
+		password = 'Sender Email Password'
 		message = sentence
 		receivers = ['sahil8sharma8@gmail.com']
 		lst = [image_path,'caption.wav']
-		mail_obj.send_email('Sender\' Email ID',password,lst,receivers,message)
+		mail_obj.send_email('Sender Email ID',password,lst,receivers,message)
 
 	b2=Button(caption, text="Send as Email", command= lambda: Email(image_name,sentence))
 	b2.pack(padx=20, pady=5)
 
 	caption.mainloop()
 	
-
+def Cam_Speak():
+	GV.speak('Press the key S from your keyboard to save the image')
 
 #to capture real time image
 def Capture_Img():
-	GV.speak('Press the key S from your keyboard to save the image')
+	process1 = Process(target=Cam_Speak, args=())
+	process1.start()
 	img = Capture_Image()
-   
+	
 	image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), img)
 	sentence=Caption(image_path, ' ')
 	Caption_Window(image_path, sentence)
@@ -144,7 +156,7 @@ def Stored_Img():
     image_path=Openfile()
 
     
-    sentence=Caption(image_path, 'i28Cc3aCHFljddrQDj8FMg') 
+    sentence=Caption(image_path, ' ') 
     Caption_Window(image_path, sentence)
 
 def Speak_Intro():
